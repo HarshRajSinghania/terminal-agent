@@ -69,12 +69,18 @@ class GitAdapter:
             except Exception:
                 branch = "DETACHED"
 
-            modified = [item.a_path for item in repo.index.diff(None)]
-            untracked = repo.untracked_files
-            deleted = [item.a_path for item in repo.index.diff(None) if item.deleted_file]
+            IGNORE_PREFIXES = (".terminal_agent/", ".pytest_cache/", "__pycache__/", ".hypothesis/", ".coverage", ".tmp")
+
+            def is_relevant(path: str) -> bool:
+                p_norm = path.replace("\\", "/")
+                return not any(p_norm.startswith(ign) or f"/{ign}" in p_norm or p_norm == ign.rstrip("/") for ign in IGNORE_PREFIXES)
+
+            modified = [item.a_path for item in repo.index.diff(None) if is_relevant(item.a_path)]
+            untracked = [p for p in repo.untracked_files if is_relevant(p)]
+            deleted = [item.a_path for item in repo.index.diff(None) if item.deleted_file and is_relevant(item.a_path)]
             
             try:
-                staged = [item.a_path for item in repo.head.commit.diff()]
+                staged = [item.a_path for item in repo.head.commit.diff() if is_relevant(item.a_path)]
             except Exception:
                 staged = []
 

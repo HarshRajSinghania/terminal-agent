@@ -2,7 +2,7 @@
 
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional
 import uuid
@@ -43,21 +43,22 @@ class SessionManager:
         session_id: Optional[str] = None
     ) -> SessionState:
         """Create and initialize a new SessionState."""
-        s_id = session_id or f"session_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}"
+        now = datetime.now(timezone.utc)
+        s_id = session_id or f"session_{now.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:6]}"
         state = SessionState(
             session_id=s_id,
             working_dir=str(self.working_dir.resolve()),
             task_description=task_description,
             contract=contract,
             current_status=VerificationStatus.PENDING,
-            metrics=SessionMetrics(start_time=datetime.utcnow().isoformat())
+            metrics=SessionMetrics(start_time=now.isoformat())
         )
         self.save_session(state)
         return state
 
     def save_session(self, state: SessionState) -> Path:
         """Persist SessionState to JSON file."""
-        state.updated_at = datetime.utcnow().isoformat()
+        state.updated_at = datetime.now(timezone.utc).isoformat()
         filepath = self.sessions_dir / f"{state.session_id}.json"
         
         # Calculate execution time

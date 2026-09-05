@@ -1,9 +1,14 @@
 """Data models for Task Contracts, Session State, Checkpoints, and Verification."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
+
+
+def utc_now_iso() -> str:
+    """Return timezone-aware current UTC time in ISO format."""
+    return datetime.now(timezone.utc).isoformat()
 
 
 class VerificationStatus(str, Enum):
@@ -54,7 +59,7 @@ class TaskContract(BaseModel):
 
 class StepAction(BaseModel):
     step_number: int
-    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    timestamp: str = Field(default_factory=utc_now_iso)
     action_type: str = Field(description="Type: tool_call, plan_update, verify, repair")
     tool_name: Optional[str] = None
     tool_args: Optional[Dict[str, Any]] = None
@@ -67,7 +72,7 @@ class StepAction(BaseModel):
 class CheckpointSnapshot(BaseModel):
     checkpoint_id: str
     name: str
-    created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    created_at: str = Field(default_factory=utc_now_iso)
     step_number: int
     git_commit: Optional[str] = None
     modified_files: List[str] = Field(default_factory=list)
@@ -79,7 +84,7 @@ class CheckpointSnapshot(BaseModel):
 
 class FailureRecord(BaseModel):
     step_number: int
-    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    timestamp: str = Field(default_factory=utc_now_iso)
     failure_category: FailureCategory
     raw_output: str
     root_cause_hypothesis: str
@@ -95,7 +100,7 @@ class AssertionResult(BaseModel):
 
 class VerificationResult(BaseModel):
     status: VerificationStatus = VerificationStatus.PENDING
-    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    timestamp: str = Field(default_factory=utc_now_iso)
     tests_run: int = 0
     tests_passed: int = 0
     tests_failed: int = 0
@@ -112,7 +117,7 @@ class VerificationResult(BaseModel):
 
 
 class SessionMetrics(BaseModel):
-    start_time: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    start_time: str = Field(default_factory=utc_now_iso)
     end_time: Optional[str] = None
     execution_time_seconds: float = 0.0
     tool_calls: int = 0
@@ -137,8 +142,8 @@ class PlanItem(BaseModel):
 
 class SessionState(BaseModel):
     session_id: str
-    created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
-    updated_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    created_at: str = Field(default_factory=utc_now_iso)
+    updated_at: str = Field(default_factory=utc_now_iso)
     working_dir: str
     task_description: str
     contract: Optional[TaskContract] = None

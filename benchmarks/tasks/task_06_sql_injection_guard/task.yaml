@@ -1,0 +1,12 @@
+id: "task_06_sql_injection_guard"
+name: "Refactor Query Builder to Parameterized Queries"
+category: "Refactoring"
+prompt: "Refactor build_user_query in query_builder.py to return a parameterized SQL query tuple (sql, params) instead of unsafe raw string formatting."
+constraints:
+  - "Do not modify test_query_builder.py"
+verification:
+  tests:
+    - "pytest test_query_builder.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

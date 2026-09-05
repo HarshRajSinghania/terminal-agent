@@ -1,0 +1,12 @@
+id: "task_03_rate_limiter"
+name: "Fix Sliding Window Rate Limiter"
+category: "Bug Fix"
+prompt: "Fix the timestamp pruning logic in SlidingWindowRateLimiter so that old requests outside the window_seconds interval are properly evicted."
+constraints:
+  - "Do not modify test_limiter.py"
+verification:
+  tests:
+    - "pytest test_limiter.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

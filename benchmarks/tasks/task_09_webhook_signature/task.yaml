@@ -1,0 +1,12 @@
+id: "task_09_webhook_signature"
+name: "Debug Webhook Timestamp and Canonicalization"
+category: "Debugging"
+prompt: "Debug verify_webhook in webhook.py so that canonical payload string formatting matches header timestamp concatenation (timestamp + '.' + raw_body)."
+constraints:
+  - "Do not modify test_webhook.py"
+verification:
+  tests:
+    - "pytest test_webhook.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

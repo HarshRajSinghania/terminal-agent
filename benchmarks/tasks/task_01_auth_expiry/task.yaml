@@ -1,0 +1,14 @@
+id: "task_01_auth_expiry"
+name: "Fix JWT Expiration Validation"
+category: "Bug Fix"
+prompt: "Fix the token expiration validation bug in auth.py so that expired tokens are properly rejected and valid tokens authenticate."
+constraints:
+  - "Do not modify tests in test_auth.py"
+  - "Preserve validate_token signature"
+verification:
+  tests:
+    - "pytest test_auth.py"
+  assertions:
+    - "no_test_files_modified"
+    - "api_contract_preserved"
+  max_files_changed: 2

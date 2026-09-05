@@ -1,0 +1,12 @@
+id: "task_10_csv_stream_parser"
+name: "Implement Memory-Bounded CSV Stream Parser"
+category: "Testing & Refactoring"
+prompt: "Implement parse_csv_chunks in csv_stream.py to yield dict rows in chunks of size chunk_size from raw CSV lines."
+constraints:
+  - "Do not modify test_csv_stream.py"
+verification:
+  tests:
+    - "pytest test_csv_stream.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

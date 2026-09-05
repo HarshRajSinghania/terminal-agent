@@ -4,7 +4,7 @@ import json
 import os
 import shutil
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -35,7 +35,8 @@ class CheckpointManager:
         target_files: Optional[List[str]] = None
     ) -> CheckpointSnapshot:
         """Create a checkpoint snapshot of the repository."""
-        chk_id = f"chk_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:4]}"
+        now = datetime.now(timezone.utc)
+        chk_id = f"chk_{now.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:4]}"
         chk_dir = self.checkpoints_dir / chk_id
         chk_dir.mkdir(parents=True, exist_ok=True)
         files_store_dir = chk_dir / "files"
@@ -86,7 +87,7 @@ class CheckpointManager:
         snapshot = CheckpointSnapshot(
             checkpoint_id=chk_id,
             name=name,
-            created_at=datetime.utcnow().isoformat(),
+            created_at=now.isoformat(),
             step_number=step_number,
             git_commit=git_commit,
             modified_files=modified_rel_paths,

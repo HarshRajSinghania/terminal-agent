@@ -1,0 +1,12 @@
+id: "task_08_jwt_signature_verify"
+name: "Refactor HMAC Signature Verifier"
+category: "Refactoring"
+prompt: "Refactor sign_and_verify_payload in signer.py to separate sign_payload and verify_signature with constant-time comparison (hmac.compare_digest)."
+constraints:
+  - "Do not modify test_signer.py"
+verification:
+  tests:
+    - "pytest test_signer.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

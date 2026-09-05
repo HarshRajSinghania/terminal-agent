@@ -1,0 +1,13 @@
+id: "task_02_payment_retry"
+name: "Implement Payment Retry with Backoff"
+category: "Feature"
+prompt: "Implement execute_payment_with_retry in payment.py to retry transient network failures up to max_retries attempts before raising PaymentFailedException."
+constraints:
+  - "Do not modify test_payment.py"
+  - "Support configurable max_retries parameter defaulting to 3"
+verification:
+  tests:
+    - "pytest test_payment.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

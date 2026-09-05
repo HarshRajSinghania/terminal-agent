@@ -1,0 +1,12 @@
+id: "task_05_cache_invalidation"
+name: "Fix Cache Invalidation on Update"
+category: "Bug Fix"
+prompt: "Fix InMemoryCache in cache.py to invalidate cached values when invalidate() or clear_prefix() is called."
+constraints:
+  - "Do not modify test_cache.py"
+verification:
+  tests:
+    - "pytest test_cache.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

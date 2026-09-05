@@ -1,6 +1,7 @@
 """Assertion evaluators for verification contracts."""
 
 import fnmatch
+from pathlib import Path
 from typing import List, Optional
 from terminal_agent.git.adapter import GitAdapter
 from terminal_agent.session.models import AssertionResult, TaskContract
@@ -41,7 +42,9 @@ class AssertionEvaluator:
 
             test_files_touched = []
             for f in modified:
-                if "test" in f.lower() or fnmatch.fnmatch(f, "*test*"):
+                f_norm = f.replace("\\", "/")
+                filename = Path(f).name
+                if filename.startswith("test_") or filename.endswith("_test.py") or f_norm.startswith("tests/"):
                     test_files_touched.append(f)
 
             if is_test_task:

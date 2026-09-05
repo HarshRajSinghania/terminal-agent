@@ -1,0 +1,12 @@
+id: "task_07_env_config_parser"
+name: "Implement Typed Environment Variable Parser"
+category: "Feature"
+prompt: "Implement parse_env_var in env_parser.py to parse environment variable values with type casting (int, float, bool, str) and default values."
+constraints:
+  - "Do not modify test_env_parser.py"
+verification:
+  tests:
+    - "pytest test_env_parser.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2

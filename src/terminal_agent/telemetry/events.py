@@ -1,7 +1,7 @@
 """Structured event logging and tracing for Terminal Agent actions."""
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
@@ -17,7 +17,7 @@ def get_traces_dir(working_dir: Optional[Path] = None) -> Path:
 
 class TelemetryEvent(BaseModel):
     """Structured telemetry record of an agent action."""
-    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     session_id: str
     step: int
     event_type: str  # "tool_call", "verification", "failure", "plan_change", "checkpoint"

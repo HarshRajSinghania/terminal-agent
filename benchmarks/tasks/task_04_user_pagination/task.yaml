@@ -1,0 +1,12 @@
+id: "task_04_user_pagination"
+name: "Add User List Pagination"
+category: "Feature"
+prompt: "Add pagination support to paginate_users in users.py returning a dict with keys 'items', 'total', 'limit', 'offset', and 'has_more'."
+constraints:
+  - "Do not modify test_users.py"
+verification:
+  tests:
+    - "pytest test_users.py"
+  assertions:
+    - "no_test_files_modified"
+  max_files_changed: 2
