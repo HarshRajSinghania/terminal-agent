@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 *.class
@@ -34,10 +34,12 @@ env/
 
 # Testing & Coverage
 .pytest_cache/
+.hypothesis/
 .coverage
 htmlcov/
 .tox/
 .nox/
+*.log
 
 # Terminal Agent Session & Checkpoint Storage
 .terminal_agent/
