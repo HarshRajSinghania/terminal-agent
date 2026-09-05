@@ -1,0 +1,43 @@
+agent:
+  max_steps: 40
+  max_retries: 3
+  timeout_seconds: 600
+  token_budget: 128000
+sandbox:
+  mode: local
+  image: python:3.12-slim
+  timeout_seconds: 60
+  network: disabled
+  max_memory_mb: 1024
+verification:
+  tests:
+  - pytest
+  lint: []
+  assertions:
+  - no_test_files_modified
+  - api_contract_preserved
+  diff:
+    max_files_changed: 10
+    allow_untracked_files: true
+  auto_rollback_on_failure: false
+security:
+  network: disabled
+  require_confirmation_for:
+  - destructive
+  - privileged
+  - network
+  blocked_paths:
+  - .env
+  - .env.*
+  - '**/*.pem'
+  - '**/*.key'
+  - '**/.ssh/*'
+  - '**/.aws/*'
+  - '**/id_rsa*'
+  - '**/secrets.*'
+provider:
+  name: mock
+  model: mock-model
+  base_url: null
+  api_key: null
+  temperature: 0.2
