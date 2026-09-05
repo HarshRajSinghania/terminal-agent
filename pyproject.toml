@@ -7,7 +7,7 @@ name = "terminal-agent"
 version = "0.1.0"
 description = "Autonomous terminal-based coding agent designed around verifiable software changes. Build. Verify. Ship."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
     { name = "Terminal Agent Team" }
@@ -26,6 +26,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Quality Assurance",
