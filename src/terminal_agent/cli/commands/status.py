@@ -59,3 +59,4 @@ def status_command(
             render_plan(latest.plan)
     else:
         console.print("[agent.muted]No previous agent sessions recorded in this workspace.[/agent.muted]")
+

@@ -29,3 +29,4 @@ def config_command(
     yaml_str = yaml.dump(config.model_dump(mode="json"), sort_keys=False, indent=2)
     syntax = Syntax(yaml_str, "yaml", theme="monokai", line_numbers=True)
     console.print(syntax)
+

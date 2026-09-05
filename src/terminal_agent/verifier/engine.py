@@ -122,3 +122,4 @@ class IndependentVerifier:
             passed_all=(final_status == VerificationStatus.VERIFIED),
             details=details
         )
+

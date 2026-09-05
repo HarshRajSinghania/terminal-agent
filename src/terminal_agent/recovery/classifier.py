@@ -25,7 +25,7 @@ class FailureClassifier:
             return FailureCategory.DEPENDENCY_ERROR, "Missing module or import dependency."
 
         # 3. Permission Error
-        if "permissiondenied" in output_lower or "permission denied" in output_lower or "access is denied" in output_lower or "operation not permitted" in output_lower:
+        if "permissionerror" in output_lower or "permissiondenied" in output_lower or "permission denied" in output_lower or "access denied" in output_lower or "access is denied" in output_lower or "operation not permitted" in output_lower:
             return FailureCategory.PERMISSION_ERROR, "Insufficient permissions to read, write, or execute."
 
         # 4. Network Error
@@ -61,3 +61,4 @@ class FailureClassifier:
             return FailureCategory.TEST_FAILURE if "pytest" in output_lower or "test" in output_lower else FailureCategory.COMMAND_FAILURE, "Nonzero command exit status."
 
         return FailureCategory.UNKNOWN, "Unknown failure condition."
+

@@ -19,3 +19,4 @@ def test_parse_chunks():
 def test_empty_csv():
     chunks = list(parse_csv_chunks("", chunk_size=5))
     assert chunks == []
+

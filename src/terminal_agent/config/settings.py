@@ -82,3 +82,4 @@ def save_default_config(destination: Path) -> Path:
     yaml_content = yaml.dump(default_config.model_dump(mode="json"), sort_keys=False, indent=2)
     destination.write_text(yaml_content, encoding="utf-8")
     return destination
+

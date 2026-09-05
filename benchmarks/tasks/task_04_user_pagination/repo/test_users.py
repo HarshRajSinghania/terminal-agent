@@ -23,3 +23,4 @@ def test_pagination_empty():
     assert res["items"] == []
     assert res["total"] == 0
     assert res["has_more"] is False
+

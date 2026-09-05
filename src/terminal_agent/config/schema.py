@@ -97,3 +97,4 @@ class TerminalAgentConfig(BaseModel):
     verification: VerificationConfig = Field(default_factory=VerificationConfig)
     security: SecurityConfig = Field(default_factory=SecurityConfig)
     provider: ProviderConfig = Field(default_factory=ProviderConfig)
+

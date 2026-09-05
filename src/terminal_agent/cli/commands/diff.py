@@ -42,3 +42,4 @@ def diff_command(
     else:
         syntax = Syntax(diff_text, "diff", theme="monokai", line_numbers=False)
         console.print(Panel(syntax, title="[agent.accent]WORKING TREE DIFF[/agent.accent]", border_style="agent.border"))
+

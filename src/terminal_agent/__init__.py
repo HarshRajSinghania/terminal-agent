@@ -4,3 +4,4 @@ Autonomous terminal-based coding agent designed around verifiable software chang
 """
 
 __version__ = "0.1.0"
+

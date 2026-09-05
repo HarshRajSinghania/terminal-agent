@@ -20,3 +20,4 @@ def test_webhook_invalid_signature():
     ts = "1725500000"
 
     assert verify_webhook(body, ts, "invalid_hex_signature", secret) is False
+

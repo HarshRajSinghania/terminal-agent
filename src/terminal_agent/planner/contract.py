@@ -55,3 +55,4 @@ class TaskContractGenerator:
             success_criteria=criteria,
             verification_commands=v_cmds
         )
+

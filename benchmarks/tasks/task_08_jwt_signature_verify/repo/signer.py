@@ -8,3 +8,4 @@ def sign_payload(data: str, secret: str) -> str:
 def verify_signature(data: str, signature: str, secret: str) -> bool:
     # Stub
     return False
+

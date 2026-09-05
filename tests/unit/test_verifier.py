@@ -26,3 +26,4 @@ def test_pytest_all_passed_parser():
     assert parsed.passed == 5
     assert parsed.failed == 0
     assert parsed.total == 5
+

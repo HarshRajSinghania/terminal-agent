@@ -53,3 +53,4 @@ def test_session_lifecycle(tmp_path: Path):
     assert restored.contract.task_id == "task_123"
     assert len(restored.completed_steps) == 1
     assert restored.metrics.tests_passed == 18
+

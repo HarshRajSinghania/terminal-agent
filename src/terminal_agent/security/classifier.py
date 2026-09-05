@@ -148,3 +148,4 @@ class CommandClassifier:
 
         # Default fallback
         return CommandCategory.WRITE, "Default standard execution"
+

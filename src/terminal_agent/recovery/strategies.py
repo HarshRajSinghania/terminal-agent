@@ -59,3 +59,4 @@ class RecoveryEngine:
             action = "Inspect command error output, review latest changes, and apply fix."
 
         return hypothesis, action
+

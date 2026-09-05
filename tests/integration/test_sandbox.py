@@ -24,3 +24,4 @@ def test_local_sandbox_timeout(tmp_path: Path):
     assert res.is_success is False
     assert res.timed_out is True
     assert res.exit_code == 124
+

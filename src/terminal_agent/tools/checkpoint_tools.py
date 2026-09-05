@@ -69,3 +69,4 @@ class RestoreCheckpointTool(BaseTool):
                 error=f"Checkpoint '{checkpoint_id}' not found or restore failed.",
                 reason=reason
             )
+

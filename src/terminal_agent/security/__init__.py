@@ -10,3 +10,4 @@ __all__ = [
     "DEFAULT_BLOCKED_PATTERNS",
     "SecurityPolicyEnforcer",
 ]
+

@@ -106,3 +106,4 @@ class ToolRegistry:
             reason = str(args["reason"])
 
         return tool.execute(args, reason=reason)
+

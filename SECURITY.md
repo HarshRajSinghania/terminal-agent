@@ -49,3 +49,4 @@ When working with untrusted repositories or third-party benchmarks:
 ## 4. Reporting a Vulnerability
 
 If you discover a potential security vulnerability in Terminal Agent, please submit an advisory or contact the security team directly instead of opening a public issue.
+

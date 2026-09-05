@@ -34,3 +34,4 @@ def test_env_var_override(tmp_path: Path, monkeypatch):
     config = load_config(tmp_path / "non_existent.yaml")
     assert config.provider.name == ProviderType.OLLAMA
     assert config.provider.model == "qwen2.5-coder"
+

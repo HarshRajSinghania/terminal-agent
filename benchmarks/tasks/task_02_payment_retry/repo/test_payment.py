@@ -35,3 +35,4 @@ def test_payment_fails_after_max_retries():
     with pytest.raises(PaymentFailedException):
         execute_payment_with_retry(gateway, max_retries=3)
     assert calls == 3
+

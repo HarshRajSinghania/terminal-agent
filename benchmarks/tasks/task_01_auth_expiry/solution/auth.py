@@ -7,3 +7,4 @@ def validate_token(payload: dict) -> bool:
     if "exp" not in payload or "sub" not in payload:
         return False
     return payload["exp"] > time.time()
+

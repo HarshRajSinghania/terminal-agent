@@ -35,3 +35,4 @@ def test_command(
 
     if result.status != VerificationStatus.VERIFIED:
         raise typer.Exit(1)
+

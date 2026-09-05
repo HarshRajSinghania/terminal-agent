@@ -16,3 +16,4 @@ def test_sql_injection_defense():
     assert sql == "SELECT * FROM users WHERE username = :username"
     assert params["username"] == evil_input
     assert evil_input not in sql
+

@@ -157,3 +157,4 @@ class SessionState(BaseModel):
     next_step: str = "Initialize repository inspection"
     metrics: SessionMetrics = Field(default_factory=SessionMetrics)
     proof_of_done: Optional[Dict[str, Any]] = None
+

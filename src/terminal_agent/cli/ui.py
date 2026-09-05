@@ -144,3 +144,4 @@ def render_proof_of_done(pod: Dict[str, Any], duration_seconds: float = 0.0) -> 
         sum_table.add_row("WHAT WAS VERIFIED", summary.get("what_was_verified", ""))
         sum_table.add_row("LIMITATIONS", summary.get("remaining_limitations", "None"))
         console.print(Panel(sum_table, title="[agent.accent]FINAL SUMMARY[/agent.accent]", border_style="agent.border"))
+

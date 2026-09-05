@@ -190,3 +190,4 @@ if __name__ == "__main__":
     runner = BenchmarkRunner()
     result = runner.run_all()
     print(json.dumps(result, indent=2))
+

@@ -19,3 +19,4 @@ def test_rate_limiter_slides_window_and_recovers():
     assert limiter.is_allowed("carol", current_time=105.0) is False
     # At t=111.0, the request at t=100.0 has expired
     assert limiter.is_allowed("carol", current_time=111.0) is True
+

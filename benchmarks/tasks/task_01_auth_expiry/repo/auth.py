@@ -8,3 +8,4 @@ def validate_token(payload: dict) -> bool:
         return False
     # BUG: does not check expiration timestamp
     return True
+

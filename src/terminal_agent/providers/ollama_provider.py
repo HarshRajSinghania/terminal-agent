@@ -121,3 +121,4 @@ class OllamaProvider(ModelProvider):
                 provider_name="ollama",
                 model_name=self.model_name
             )
+

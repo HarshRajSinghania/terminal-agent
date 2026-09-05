@@ -13,3 +13,4 @@ def test_missing_fields():
     assert validate_token({}) is False
     assert validate_token({"sub": "user_42"}) is False
     assert validate_token(None) is False
+

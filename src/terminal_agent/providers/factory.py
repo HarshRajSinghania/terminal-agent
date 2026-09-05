@@ -26,3 +26,4 @@ def create_provider(config: ProviderConfig) -> ModelProvider:
     else:
         # Default fallback to MockProvider
         return MockProvider(model_name=config.model)
+

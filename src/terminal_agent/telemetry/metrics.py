@@ -35,3 +35,4 @@ class MetricsCollector:
             m.verification_status = state.current_status.value
 
         return m
+

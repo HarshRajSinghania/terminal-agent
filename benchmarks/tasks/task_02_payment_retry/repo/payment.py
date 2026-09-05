@@ -7,3 +7,4 @@ def execute_payment_with_retry(gateway_fn: Callable[[], dict], max_retries: int 
     """Execute gateway payment with retry logic."""
     # Starter implementation: does not retry
     return gateway_fn()
+

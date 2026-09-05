@@ -25,3 +25,4 @@ def test_cache_clear_prefix():
     assert cache.get("post:1") is None
     assert cache.get("post:2") is None
     assert cache.get("user:1") == "u1"
+

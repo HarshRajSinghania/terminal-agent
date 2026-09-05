@@ -36,3 +36,4 @@ def test_git_adapter(tmp_path: Path):
     # Test working tree restore
     adapter.restore_working_tree()
     assert f1.read_text() == "print('version 1')\n"
+

@@ -62,3 +62,4 @@ def test_command_tool(tmp_path: Path):
     )
     assert cmd_res.success is True
     assert "agent test run" in cmd_res.output
+

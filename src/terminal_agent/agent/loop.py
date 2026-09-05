@@ -335,3 +335,4 @@ class AgentLoop:
         self.state.proof_of_done = pod
         self.session_mgr.save_session(self.state)
         self._notify("proof_of_done", pod)
+

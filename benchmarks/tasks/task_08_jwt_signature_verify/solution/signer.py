@@ -10,3 +10,4 @@ def verify_signature(data: str, signature: str, secret: str) -> bool:
     """Verify HMAC SHA256 signature using constant-time comparison."""
     expected_sig = sign_payload(data, secret)
     return hmac.compare_digest(expected_sig, signature)
+

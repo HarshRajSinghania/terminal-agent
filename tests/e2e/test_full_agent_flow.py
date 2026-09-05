@@ -145,3 +145,4 @@ def test_expired_token():
     assert "contract_ready" in events_recorded
     assert "repair_plan" in events_recorded
     assert "proof_of_done" in events_recorded
+

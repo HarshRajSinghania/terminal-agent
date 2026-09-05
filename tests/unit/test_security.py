@@ -71,3 +71,4 @@ def test_security_policy_enforcement(tmp_path: Path):
     allowed, reason, cat = enforcer.check_command("rm -rf target_folder")
     assert allowed is False
     assert "denied" in reason.lower()
+

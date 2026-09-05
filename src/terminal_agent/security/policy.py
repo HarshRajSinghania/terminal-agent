@@ -48,3 +48,4 @@ class SecurityPolicyEnforcer:
         if self.guard.is_path_blocked(file_path):
             return False, f"Access to '{file_path}' is blocked by secret protection policy."
         return True, "Path allowed"
+

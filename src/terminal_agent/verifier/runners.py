@@ -70,3 +70,4 @@ class TestOutputParser:
             return ParsedSummary(passed=1, failed=0, errors=0, skipped=0, total=1)
         else:
             return ParsedSummary(passed=0, failed=1, errors=0, skipped=0, total=1)
+

@@ -33,3 +33,4 @@ def test_list_checkpoints(tmp_path: Path):
 
     checkpoints = mgr.list_checkpoints()
     assert len(checkpoints) == 2
+

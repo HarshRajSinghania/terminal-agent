@@ -36,3 +36,4 @@ def test_recovery_plan_generation():
     )
     assert "Syntax" in hypo
     assert "syntax" in action.lower() or "repair" in action.lower()
+

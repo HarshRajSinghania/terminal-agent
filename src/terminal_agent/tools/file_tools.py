@@ -337,3 +337,4 @@ class SearchFilesTool(BaseTool):
                 error=f"Failed search: {e}",
                 reason=reason
             )
+

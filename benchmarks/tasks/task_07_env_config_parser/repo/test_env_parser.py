@@ -18,3 +18,4 @@ def test_boolean_env(monkeypatch):
 def test_default_fallback(monkeypatch):
     monkeypatch.delenv("MISSING_KEY", raising=False)
     assert parse_env_var("MISSING_KEY", int, default=42) == 42
+

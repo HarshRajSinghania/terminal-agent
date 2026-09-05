@@ -77,3 +77,4 @@ class MockProvider(ModelProvider):
             provider_name="mock",
             model_name=self.model_name
         )
+

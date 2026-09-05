@@ -29,3 +29,4 @@ def test_benchmark_evaluation_suite(tmp_path: Path):
         assert run["tests_passed"] > 0
         assert run["tests_failed"] == 0
         assert "duration_ms" in run
+

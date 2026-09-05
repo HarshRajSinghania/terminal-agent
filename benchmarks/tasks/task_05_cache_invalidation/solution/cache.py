@@ -21,3 +21,4 @@ class InMemoryCache:
         for k in keys_to_delete:
             del self._store[k]
         return len(keys_to_delete)
+

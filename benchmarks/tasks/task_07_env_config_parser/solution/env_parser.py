@@ -13,3 +13,4 @@ def parse_env_var(key: str, var_type: Type = str, default: Any = None) -> Any:
         return var_type(val)
     except Exception:
         return default
+

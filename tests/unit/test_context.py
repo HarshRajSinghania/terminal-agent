@@ -41,3 +41,4 @@ def test_repository_context_engine(tmp_path: Path):
 
     context = engine.build_initial_context("Fix main function")
     assert "DIRECTORY STRUCTURE" in context
+

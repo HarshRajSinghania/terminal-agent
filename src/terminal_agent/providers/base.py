@@ -54,3 +54,4 @@ class ModelProvider(ABC):
     def check_health(self) -> Tuple[bool, str]:
         """Check availability and connectivity of the model provider."""
         pass
+

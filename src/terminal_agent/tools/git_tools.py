@@ -121,3 +121,4 @@ class GitLogTool(BaseTool):
             data={"commits": commits},
             reason=reason
         )
+

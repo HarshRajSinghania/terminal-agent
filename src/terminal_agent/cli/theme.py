@@ -52,3 +52,4 @@ SYM_CROSS = "[agent.error]✗[/agent.error]"
 SYM_ARROW = "[agent.accent]→[/agent.accent]"
 SYM_BULLET = "[agent.muted]•[/agent.muted]"
 SYM_WARN = "[agent.warning]![/agent.warning]"
+

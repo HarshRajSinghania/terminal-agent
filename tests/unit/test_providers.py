@@ -27,3 +27,4 @@ def test_provider_factory():
     assert isinstance(p, MockProvider)
     ok, msg = p.check_health()
     assert ok is True
+

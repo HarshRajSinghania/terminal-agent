@@ -73,3 +73,4 @@ def rollback_command(
     else:
         console.print(f"{SYM_CROSS} [agent.error]Failed to rollback to checkpoint '{checkpoint_id}'. Checkpoint not found.[/agent.error]")
         raise typer.Exit(1)
+

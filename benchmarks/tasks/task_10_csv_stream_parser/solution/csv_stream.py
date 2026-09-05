@@ -18,3 +18,4 @@ def parse_csv_chunks(csv_text: str, chunk_size: int = 2) -> Iterator[List[Dict[s
 
     if current_chunk:
         yield current_chunk
+

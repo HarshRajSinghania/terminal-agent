@@ -17,3 +17,4 @@ class InMemoryCache:
     def clear_prefix(self, prefix: str) -> int:
         # BUG: returns 0 without deleting keys
         return 0
+

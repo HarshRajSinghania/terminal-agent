@@ -57,3 +57,4 @@ def trace_command(
         )
 
     console.print(table)
+

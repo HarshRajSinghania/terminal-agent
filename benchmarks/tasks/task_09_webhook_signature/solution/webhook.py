@@ -6,3 +6,4 @@ def verify_webhook(raw_body: str, timestamp_str: str, signature: str, secret: st
     canonical = f"{timestamp_str}.{raw_body}"
     expected = hmac.new(secret.encode("utf-8"), canonical.encode("utf-8"), hashlib.sha256).hexdigest()
     return hmac.compare_digest(expected, signature)
+

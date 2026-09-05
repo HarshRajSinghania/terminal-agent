@@ -19,3 +19,4 @@ def test_invalid_secret_rejected():
     data = "user_id:100;role:admin"
     sig = sign_payload(data, "secret_A")
     assert verify_signature(data, sig, "secret_B") is False
+

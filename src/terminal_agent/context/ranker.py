@@ -84,3 +84,4 @@ class DeterministicRanker:
 
         reason_str = ", ".join(reasons) if reasons else "low keyword frequency"
         return round(total_score, 2), reason_str
+
