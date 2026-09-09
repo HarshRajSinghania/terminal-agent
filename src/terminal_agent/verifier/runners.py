@@ -25,8 +25,15 @@ class TestOutputParser:
         errors = 0
         skipped = 0
 
-        # Check pytest summary line: e.g. "== 5 passed, 1 failed in 0.12s =="
-        pytest_match = re.search(r"=+\s*(.*?)\s+in\s+[\d\.]+s\s*=+", output)
+        # Strip ANSI color codes if present
+        clean_output = re.sub(r"\x1b\[[0-9;]*m", "", output)
+
+        # Check pytest summary line: e.g. "== 5 passed, 1 failed in 0.12s ==" or "== 5 passed in 0.12s (0:00:00) =="
+        pytest_match = re.search(r"=+\s*(.*?)\s+in\s+[\d\.]+s(?:\s*\([^)]*\))?\s*=+", clean_output)
+        if not pytest_match:
+            # Also try without surrounding equal signs (e.g. quiet mode or multiline summary)
+            pytest_match = re.search(r"((?:\d+\s+passed|\d+\s+failed|\d+\s+error|\d+\s+skipped)[^\n]*)\s+in\s+[\d\.]+s", clean_output)
+
         if pytest_match:
             summary_str = pytest_match.group(1)
             p_match = re.search(r"(\d+)\s+passed", summary_str)

@@ -34,6 +34,18 @@ class AssertionEvaluator:
                 )
             )
 
+        # Helper to check if file is an internal temporary/bytecode artifact
+        def is_ignored_artifact(path_str: str) -> bool:
+            p = path_str.replace("\\", "/")
+            return (
+                p.endswith(".pyc")
+                or p.endswith(".pyo")
+                or "__pycache__" in p
+                or ".pytest_cache" in p
+                or ".hypothesis" in p
+                or ".terminal_agent" in p
+            )
+
         # 2. Check no test files modified (unless task specifically targets tests)
         if "no_test_files_modified" in configured_assertions:
             is_test_task = False
@@ -42,6 +54,8 @@ class AssertionEvaluator:
 
             test_files_touched = []
             for f in modified:
+                if is_ignored_artifact(f):
+                    continue
                 f_norm = f.replace("\\", "/")
                 filename = Path(f).name
                 if filename.startswith("test_") or filename.endswith("_test.py") or f_norm.startswith("tests/"):
@@ -69,6 +83,8 @@ class AssertionEvaluator:
         if contract and contract.allowed_files:
             out_of_scope = []
             for f in modified:
+                if is_ignored_artifact(f):
+                    continue
                 if f not in contract.allowed_files and not any(fnmatch.fnmatch(f, pat) for pat in contract.allowed_files):
                     out_of_scope.append(f)
 
