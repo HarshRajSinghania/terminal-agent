@@ -13,18 +13,13 @@ authors = [
     { name = "PicadoLabs", email = "picadolabs@gmail.com" }
 ]
 
-[project.urls]
-Homepage = "https://picadolabs.me"
-Documentation = "https://github.com/PicadoLabs/terminal-agent#readme"
-Repository = "https://github.com/PicadoLabs/terminal-agent"
-Issues = "https://github.com/PicadoLabs/terminal-agent/issues"
 keywords = [
     "terminal",
     "coding-agent",
     "autonomous",
     "verification",
     "ai",
-    "developer-tools"
+    "developer-tools",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -49,6 +44,12 @@ dependencies = [
     "gitpython>=3.1.43",
     "psutil>=5.9.8",
 ]
+
+[project.urls]
+Homepage = "https://picadolabs.me"
+Documentation = "https://github.com/PicadoLabs/terminal-agent#readme"
+Repository = "https://github.com/PicadoLabs/terminal-agent"
+Issues = "https://github.com/PicadoLabs/terminal-agent/issues"
 
 [project.optional-dependencies]
 docker = [
