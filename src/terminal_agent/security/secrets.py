@@ -37,6 +37,15 @@ class SecretGuard:
     def is_path_blocked(self, file_path: Path | str) -> bool:
         """Check whether a given path is blocked by security policy."""
         try:
+            import os
+            import re
+            str_path = str(file_path).replace("\\", "/")
+
+            # Treat Windows drive paths (e.g. C:/...) on non-Windows systems as external absolute paths
+            if re.match(r'^[a-zA-Z]:', str_path):
+                if os.name != "nt":
+                    return True
+
             p = Path(file_path)
             # Normalize path
             if not p.is_absolute():

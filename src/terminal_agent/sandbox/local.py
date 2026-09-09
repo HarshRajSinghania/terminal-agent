@@ -36,6 +36,13 @@ class LocalSandbox(Sandbox):
         exec_timeout = timeout or self.default_timeout
         sanitized_env = self.secret_guard.sanitize_env(env)
 
+        # Ensure cwd is in PYTHONPATH so local modules can be imported across all platforms
+        existing_pythonpath = sanitized_env.get("PYTHONPATH", "")
+        if existing_pythonpath:
+            sanitized_env["PYTHONPATH"] = f"{str(exec_cwd)}{os.pathsep}{existing_pythonpath}"
+        else:
+            sanitized_env["PYTHONPATH"] = str(exec_cwd)
+
         start_time = time.perf_counter()
         timed_out = False
         stdout_text = ""
