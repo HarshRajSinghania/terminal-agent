@@ -43,6 +43,9 @@ class LocalSandbox(Sandbox):
         else:
             sanitized_env["PYTHONPATH"] = str(exec_cwd)
 
+        # Prevent stale bytecode caching and artifact pollution during sandbox runs
+        sanitized_env["PYTHONDONTWRITEBYTECODE"] = "1"
+
         start_time = time.perf_counter()
         timed_out = False
         stdout_text = ""

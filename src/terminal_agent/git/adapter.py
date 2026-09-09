@@ -69,19 +69,33 @@ class GitAdapter:
             except Exception:
                 branch = "DETACHED"
 
-            IGNORE_PREFIXES = (".terminal_agent/", ".pytest_cache/", "__pycache__/", ".hypothesis/", ".coverage", ".tmp")
+            IGNORE_PREFIXES = (
+                ".terminal_agent",
+                ".pytest_cache",
+                "__pycache__",
+                ".hypothesis",
+                ".coverage",
+                ".tmp",
+                ".tox",
+                ".mypy_cache",
+                ".ruff_cache",
+            )
 
             def is_relevant(path: str) -> bool:
-                p_norm = path.replace("\\", "/")
+                p_norm = path.replace("\\", "/").strip("/")
                 filename = Path(p_norm).name
                 if (
                     filename.startswith(".coverage")
                     or filename == ".coverage"
                     or p_norm.endswith(".pyc")
                     or p_norm.endswith(".pyo")
+                    or p_norm.endswith(".pyd")
                 ):
                     return False
-                return not any(p_norm.startswith(ign) or f"/{ign}" in p_norm or p_norm == ign.rstrip("/") for ign in IGNORE_PREFIXES)
+                for ign in IGNORE_PREFIXES:
+                    if p_norm == ign or p_norm.startswith(f"{ign}/") or f"/{ign}/" in p_norm or p_norm.endswith(f"/{ign}"):
+                        return False
+                return True
 
             modified = [item.a_path for item in repo.index.diff(None) if is_relevant(item.a_path)]
             untracked = [p for p in repo.untracked_files if is_relevant(p)]

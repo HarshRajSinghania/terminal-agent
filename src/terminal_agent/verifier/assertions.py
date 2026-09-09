@@ -29,6 +29,7 @@ class AssertionEvaluator:
             return (
                 p.endswith(".pyc")
                 or p.endswith(".pyo")
+                or p.endswith(".pyd")
                 or filename.startswith(".coverage")
                 or filename == ".coverage"
                 or "__pycache__" in p
@@ -36,6 +37,9 @@ class AssertionEvaluator:
                 or ".hypothesis" in p
                 or ".terminal_agent" in p
                 or ".tmp" in p
+                or ".tox" in p
+                or ".mypy_cache" in p
+                or ".ruff_cache" in p
             )
 
         relevant_modified = [f for f in modified if not is_ignored_artifact(f)]
