@@ -21,6 +21,7 @@ from terminal_agent.config.settings import load_config
 from terminal_agent.context.engine import RepositoryContextEngine
 from terminal_agent.git.adapter import GitAdapter
 from terminal_agent.planner.contract import TaskContractGenerator
+from terminal_agent.providers.detector import ProviderStatus, resolve_active_provider
 from terminal_agent.providers.factory import create_provider
 from terminal_agent.sandbox.docker import DockerSandbox
 from terminal_agent.sandbox.local import LocalSandbox
@@ -62,12 +63,15 @@ def run_command(
 
     render_task_card(task_desc, target_dir)
 
-    # Load configuration
+    # Load configuration & resolve active provider
     config = load_config(target_dir / "terminal-agent.config.yaml")
-    if provider_name:
-        config.provider.name = provider_name  # type: ignore
-    if model_name:
-        config.provider.model = model_name
+    resolved_prov_cfg, prov_info = resolve_active_provider(
+        config=config,
+        explicit_provider=provider_name,
+        explicit_model=model_name,
+        working_dir=target_dir
+    )
+    config.provider = resolved_prov_cfg
 
     # Initialize subsystems
     secret_guard = SecretGuard(blocked_patterns=config.security.blocked_paths, working_dir=target_dir)
@@ -125,8 +129,12 @@ def run_command(
     # Initialize Provider
     provider = create_provider(config.provider)
     health_ok, health_msg = provider.check_health()
-    if not health_ok and config.provider.name != "mock":
-        console.print(f"[agent.warning]Warning: {health_msg}[/agent.warning]")
+    if not health_ok and config.provider.name.value != "mock":
+        console.print(f"[agent.warning]Provider Notice ({prov_info.display_name}): {health_msg}[/agent.warning]")
+        if prov_info.action_hint:
+            console.print(f"[agent.accent]Suggested Action: {prov_info.action_hint}[/agent.accent]")
+        if not prov_info.is_usable:
+            console.print("\n[agent.muted]To configure or switch model providers, run: [bold]terminal-agent setup[/bold][/agent.muted]\n")
 
     # Create Session
     session_state = session_mgr.create_session(task_description=task_desc)

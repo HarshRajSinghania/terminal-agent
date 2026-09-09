@@ -1,52 +1,70 @@
-# Security Policy — Terminal Agent
+# Security Policy
 
-Terminal Agent is an autonomous coding agent that executes commands and modifies code directly on developer environments and sandboxes. Safety is a first-class architectural pillar.
-
----
-
-## 1. Threat Model & Sandboxing
-
-Terminal Agent supports two execution environments:
-- **Local Workspace Sandbox**: Commands run inside the designated workspace directory with strict timeouts, process tree termination, and environment variable sanitization.
-- **Docker Sandbox**: Commands run in an isolated ephemeral Docker container (`--rm`, `--memory=1024m`, and `--network none` when network is disabled).
-
-### Host Protection & Secret Redaction
-Terminal Agent enforces automatic secret protection through `SecretGuard`. The following files and directories are strictly blocked from being read, written, or modified by the agent:
-- `.env`, `.env.*`, `*.env`
-- `*.pem`, `*.key`, `*.pfx`, `*.p12`
-- `id_rsa*`, `id_ed25519*`, `id_dsa*`
-- `.ssh/*`, `.aws/*`, `.gnupg/*`, `.netrc`
-
-Any attempt by the agent or LLM tool to access paths matching these patterns or escaping the workspace root is blocked immediately.
+Terminal Agent executes commands, runs test suites, and modifies source code directly within developer environments and sandboxes. Security, safety, and strict execution boundaries are foundational architectural pillars.
 
 ---
 
-## 2. Command Safety Classification
+## 1. Supported Versions
 
-All commands dispatched by the agent are evaluated by `CommandClassifier` before execution and categorized into:
+We release patches and security fixes for the following versions:
 
-| Category | Description | Examples | Confirmation Default |
-| :--- | :--- | :--- | :--- |
-| **SAFE** | Read-only inspection, test execution, linters | `pytest`, `git status`, `git diff`, `cat`, `ls` | Auto-allowed |
-| **WRITE** | Standard file and repository modifications | `mkdir`, `cp`, `git add`, `touch` | Auto-allowed |
-| **DESTRUCTIVE** | Unrecoverable file or directory deletion | `rm -rf`, `del /s`, `format`, `dd` | Requires User Confirmation |
-| **NETWORK** | External network transfers or repository push | `curl`, `wget`, `ssh`, `git push` | Requires User Confirmation |
-| **PRIVILEGED** | Host elevation or system changes | `sudo`, `run-as`, `reg add`, `useradd` | Requires User Confirmation |
-
-When interactive confirmation is disabled (e.g. headless CI runs), `DESTRUCTIVE` and `PRIVILEGED` commands are automatically rejected.
+| Version | Supported          | Status |
+| ------- | ------------------ | ------ |
+| `0.1.x` | Yes | Current Active Release |
+| `< 0.1` | No                 | Unsupported |
 
 ---
 
-## 3. Sandboxing Untrusted Code
+## 2. Reporting a Vulnerability
 
-When working with untrusted repositories or third-party benchmarks:
-1. Set `sandbox.mode: docker` in `terminal-agent.config.yaml`.
-2. Set `security.network: disabled` to block outbound socket connections.
-3. Review `git diff` before committing or running outside the sandbox.
+If you discover a security vulnerability in Terminal Agent, please report it **privately**. 
+
+**DO NOT disclose vulnerabilities through public GitHub issues, discussions, or pull requests.**
+
+### Reporting Procedure
+
+1. Send an email to: **picadolabs@gmail.com**
+2. Include the subject prefix: `[SECURITY VULNERABILITY] Terminal Agent: <Brief Description>`
+3. Provide as much detail as possible to help us reproduce and remediate the issue promptly:
+   - **Type of Issue**: (e.g., Sandbox Escape, Path Traversal, Arbitrary Code Execution beyond Sandbox, Secret Exposure, Command Injection).
+   - **Affected Component**: (e.g., `LocalSandbox`, `DockerSandbox`, `SecretGuard`, `CommandClassifier`, `ToolRegistry`).
+   - **Steps to Reproduce**: Detailed step-by-step reproduction instructions or a minimal reproducible repository.
+   - **Proof of Concept (PoC)**: Reproduction script or task prompt triggering the vulnerability.
+   - **Impact Assessment**: How an attacker could exploit this vulnerability and the potential severity.
+   - **Proposed Mitigation**: Suggested fix or patch if available.
+
+### Response Timeline
+
+- **Acknowledgment**: Within 48 hours of receipt.
+- **Triage & Confirmation**: Within 5 business days.
+- **Remediation & Patch Release**: Coordinated disclosure with a patch release and advisory.
 
 ---
 
-## 4. Reporting a Vulnerability
+## 3. Threat Model & Sandboxing Architecture
 
-If you discover a potential security vulnerability in Terminal Agent, please submit an advisory or contact the security team directly instead of opening a public issue.
+Terminal Agent enforces multiple defense-in-depth isolation layers:
 
+### Execution Sandboxes
+- **Local Sandbox (`LocalSandbox`)**: Runs commands within the local workspace directory with strict execution timeouts, process-tree termination via `psutil` to prevent runaway child processes, and environment variable sanitization.
+- **Docker Sandbox (`DockerSandbox`)**: Runs commands inside an ephemeral, resource-constrained container with non-root privileges and optional network isolation (`--network none`).
+
+### Secret Guard & Path Traversal Protection
+The `SecretGuard` component continuously monitors all file system operations and tool outputs:
+- **Blocked Files**: `.env`, `.env.*`, `*.env`, `*.pem`, `*.key`, `*.pfx`, `*.p12`, `id_rsa*`, `id_ed25519*`, `.ssh/*`, `.aws/*`, `.gnupg/*`, `.netrc`.
+- **Path Traversal Guard**: Prevents path escaping outside the designated workspace root directory (`../..`).
+- **Secret Redaction**: Real-time linear-time scanner detecting sensitive token prefixes (`sk-`, `ghp_`, `xoxb-`, `AIzaSy`) and high-entropy secret patterns, redacting them to `[REDACTED_SECRET]` before passing tool outputs back to LLM providers.
+
+### Command Risk Classification
+All shell commands are evaluated by `CommandClassifier` before dispatch:
+- **SAFE / WRITE**: Read-only operations, linters, tests, and standard workspace file changes (auto-allowed).
+- **DESTRUCTIVE / PRIVILEGED / NETWORK**: High-risk system commands (`rm -rf /`, `mkfs`, `format`, `dd`, `sudo`, `reg add`, `curl`, `wget`). In headless or non-interactive environments, destructive and privileged commands are denied automatically.
+
+---
+
+## 4. Security Inquiries & Contact
+
+For general security questions or vulnerability reports, contact:
+- **Organization**: PicadoLabs
+- **Email**: picadolabs@gmail.com
+- **Website**: https://picadolabs.me

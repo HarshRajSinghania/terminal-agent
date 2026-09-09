@@ -11,6 +11,7 @@ from terminal_agent.cli.commands.diff import diff_command
 from terminal_agent.cli.commands.doctor import doctor_command
 from terminal_agent.cli.commands.resume import resume_command
 from terminal_agent.cli.commands.run import run_command
+from terminal_agent.cli.commands.setup import setup_command
 from terminal_agent.cli.commands.status import status_command
 from terminal_agent.cli.commands.test import test_command
 from terminal_agent.cli.commands.trace import trace_command
@@ -23,6 +24,7 @@ app = typer.Typer(
 
 # Register Subcommands
 app.command(name="run", help="Run an autonomous coding task.")(run_command)
+app.command(name="setup", help="Interactively configure model providers (Ollama, OpenAI, Claude, Gemini).")(setup_command)
 app.command(name="resume", help="Resume an interrupted agent session.")(resume_command)
 app.command(name="status", help="Inspect workspace git status and active session.")(status_command)
 app.command(name="diff", help="View working tree git diff and stats.")(diff_command)
@@ -34,7 +36,7 @@ app.command(name="trace", help="View structured telemetry trace for a session.")
 app.command(name="config", help="View or initialize configuration file.")(config_command)
 
 KNOWN_COMMANDS = {
-    "run", "resume", "status", "diff", "test", "checkpoint",
+    "run", "setup", "resume", "status", "diff", "test", "checkpoint",
     "rollback", "doctor", "trace", "config", "--help", "-h",
     "--version", "-v"
 }

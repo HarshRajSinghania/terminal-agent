@@ -10,8 +10,14 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-    { name = "Terminal Agent Team" }
+    { name = "PicadoLabs", email = "picadolabs@gmail.com" }
 ]
+
+[project.urls]
+Homepage = "https://picadolabs.me"
+Documentation = "https://github.com/PicadoLabs/terminal-agent#readme"
+Repository = "https://github.com/PicadoLabs/terminal-agent"
+Issues = "https://github.com/PicadoLabs/terminal-agent/issues"
 keywords = [
     "terminal",
     "coding-agent",
