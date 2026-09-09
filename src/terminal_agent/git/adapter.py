@@ -73,6 +73,14 @@ class GitAdapter:
 
             def is_relevant(path: str) -> bool:
                 p_norm = path.replace("\\", "/")
+                filename = Path(p_norm).name
+                if (
+                    filename.startswith(".coverage")
+                    or filename == ".coverage"
+                    or p_norm.endswith(".pyc")
+                    or p_norm.endswith(".pyo")
+                ):
+                    return False
                 return not any(p_norm.startswith(ign) or f"/{ign}" in p_norm or p_norm == ign.rstrip("/") for ign in IGNORE_PREFIXES)
 
             modified = [item.a_path for item in repo.index.diff(None) if is_relevant(item.a_path)]

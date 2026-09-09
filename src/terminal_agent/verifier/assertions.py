@@ -22,9 +22,27 @@ class AssertionEvaluator:
         status = git_adapter.get_status()
         modified = status.modified_files + status.untracked_files + status.staged_files
 
+        # Helper to check if file is an internal temporary/bytecode artifact
+        def is_ignored_artifact(path_str: str) -> bool:
+            p = path_str.replace("\\", "/")
+            filename = Path(p).name
+            return (
+                p.endswith(".pyc")
+                or p.endswith(".pyo")
+                or filename.startswith(".coverage")
+                or filename == ".coverage"
+                or "__pycache__" in p
+                or ".pytest_cache" in p
+                or ".hypothesis" in p
+                or ".terminal_agent" in p
+                or ".tmp" in p
+            )
+
+        relevant_modified = [f for f in modified if not is_ignored_artifact(f)]
+
         # 1. Check max files changed
         if "max_files_changed" in configured_assertions or max_files_allowed > 0:
-            count = len(modified)
+            count = len(relevant_modified)
             passed = count <= max_files_allowed
             results.append(
                 AssertionResult(
@@ -34,18 +52,6 @@ class AssertionEvaluator:
                 )
             )
 
-        # Helper to check if file is an internal temporary/bytecode artifact
-        def is_ignored_artifact(path_str: str) -> bool:
-            p = path_str.replace("\\", "/")
-            return (
-                p.endswith(".pyc")
-                or p.endswith(".pyo")
-                or "__pycache__" in p
-                or ".pytest_cache" in p
-                or ".hypothesis" in p
-                or ".terminal_agent" in p
-            )
-
         # 2. Check no test files modified (unless task specifically targets tests)
         if "no_test_files_modified" in configured_assertions:
             is_test_task = False
@@ -53,9 +59,7 @@ class AssertionEvaluator:
                 is_test_task = True
 
             test_files_touched = []
-            for f in modified:
-                if is_ignored_artifact(f):
-                    continue
+            for f in relevant_modified:
                 f_norm = f.replace("\\", "/")
                 filename = Path(f).name
                 if filename.startswith("test_") or filename.endswith("_test.py") or f_norm.startswith("tests/"):
@@ -82,9 +86,7 @@ class AssertionEvaluator:
         # 3. Check allowed file scope if specified in contract
         if contract and contract.allowed_files:
             out_of_scope = []
-            for f in modified:
-                if is_ignored_artifact(f):
-                    continue
+            for f in relevant_modified:
                 if f not in contract.allowed_files and not any(fnmatch.fnmatch(f, pat) for pat in contract.allowed_files):
                     out_of_scope.append(f)
 
